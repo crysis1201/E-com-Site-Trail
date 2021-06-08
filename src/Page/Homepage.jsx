@@ -3,7 +3,7 @@ import "./Homepage.scss"
 
 const Homepage = ({history}) => {
     return ( 
-        <div className="homepage max-w-screen-lg mx-auto">
+        <div className="homepage">
             <Directory />
         </div>
      );
