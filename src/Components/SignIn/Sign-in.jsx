@@ -1,4 +1,7 @@
 import React from "react";
+import CustomButton from "../CustomButton/CustomButton";
+import FormInput from "../form-Input/Form-Input";
+import { signInWithGoogle } from  "../firebase/firebase-utils"
 
 class signIn extends React.Component {
   constructor(props) {
@@ -13,38 +16,40 @@ class signIn extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.state({ email: "", password: "" });
+    this.setState({ email: "", password: "" });
   };
 
   handleChange = event => {
       const {name, value} = event.target;
-      this.setstate({[name]: value})
+      this.setState({[name]: value})
   }
 
   render() {
     return (
-      <div>
-        <h2>I already have an account</h2>
-        <p>Sign in with your email and password</p>
+      <div className="w-1/2" >
+        <h2 className="text-2xl pb-5 pt-5 text-left">I already have an account</h2>
+        <p className="text-left">Sign in with your email and password</p>
 
         <form onSubmit={this.handleSubmit}>
-          <input 
+          <FormInput 
             name="email" 
             type="email"
-            onChange={this.handleChange}
+            handleChange={this.handleChange}
+            label="email"
             value={this.state.email} required />
-          <label>Email</label>
 
-          <input
+          <FormInput
             name="password"
             type="password"
             value={this.state.password}
-            onChange={this.handleChange}
+            handleChange={this.handleChange}
+            label="password"
             required
           />
-          <label>Password</label>
-
-          <input type="submit" value="submit Form" />
+          <div className="flex justify-between">
+            <CustomButton type="submit">Sign In</CustomButton>
+            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>{' '}Sign In With Google {''}</CustomButton>
+          </div>
         </form>
       </div>
     );
