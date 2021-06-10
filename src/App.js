@@ -6,25 +6,41 @@ import Header from './Components/Header';
 import Homepage from "./Page/Homepage"
 import ShopPage from "./Page/Shoppage"
 import SignInSignupPage from './Page/sign-in-and-sign-up/signin-signup';
-import {auth} from "./Components/firebase/firebase-utils"
+import {auth, createUserProfileDocument} from "./Components/firebase/firebase-utils"
 
 class App extends React.Component {
   constructor() {
     super();
       this.state = {
         currentUser: null
-      }
+      };
   }
 
-  unsubscribeFromAuth: null
+  unsubscribeFromAuth: null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({currentUser: user})
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          }, () => {
+            console.log(this.state)
+          })
+        })
+      }
+      else {
+        this.setState({currentUser: userAuth})
+      }
     })
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() { 
     this.unsubscribeFromAuth();
   }
 
