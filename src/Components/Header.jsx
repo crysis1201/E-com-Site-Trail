@@ -6,8 +6,11 @@ import {auth} from "../Components/firebase/firebase-utils"
 import CartIcon from './Cart/cart-icon'
 import './header.styles.scss';
 import CartDropdown from "./Cart/cart-dropdown"
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../react/user/user.selectors';
+import { selectCartHidden } from '../react/cart/cart.selectors';
 
-const Header = ({currentUser, hidden}) => (
+const Header = ({currentUser, hidden, history}) => (
   <div className='header'>
     <Link className='logo-container' to='/'>
       <Logo className='logo' />
@@ -39,9 +42,9 @@ const Header = ({currentUser, hidden}) => (
   </div>
 );
 
-const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
-  currentUser,
-  hidden
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
 })
 
-export default connect(mapStateToProps)(Header);
+export default  connect(mapStateToProps)(Header);
