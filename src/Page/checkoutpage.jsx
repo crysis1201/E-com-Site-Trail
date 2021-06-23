@@ -9,6 +9,8 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems, selectCartItemsTotal } from "../react/cart/cart.selectors"
 
 import CheckoutItem from "../Components/checkout-item/checkoutItem";
+
+import Checkout from "../Components/stripe/stripe";
   
 const checkoutPage = ({cartItems, cartItemsTotal}) => {
     return ( 
@@ -35,10 +37,10 @@ const checkoutPage = ({cartItems, cartItemsTotal}) => {
                 <CheckoutItem key={cartItem.id} cartItem={cartItem}  />
                 )
         }
-        
         <div className="total">
             ${cartItemsTotal}
         </div>    
+        <Checkout price={cartItemsTotal} />
     </div>
      );
 }
