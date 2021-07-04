@@ -7,7 +7,7 @@ import { compose } from "redux";
 
 
 const mapStateToProps = createStructuredSelector({
-    isFetchingCollection: selectIsCollectionsFetching 
+    isLoading: selectIsCollectionsFetching 
 });
 
 const collectionOverviewContainer = compose(
